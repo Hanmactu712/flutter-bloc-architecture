@@ -1,0 +1,22 @@
+{
+  "appTitle": "Sample Flutter App Structure",
+  "add": "Add",
+  "update": "Update",
+  "name": "Name",
+  "description": "Description",
+  "settings": "Settings",
+  "language": "Language",
+  "theme": "Theme",
+  "light": "Light",
+  "dark": "Dark",
+  "darkMode": "Dark mode",
+  "system": "System",
+  "english": "English",
+  "login": "Login",
+  "logout": "Logout",
+  "loginSuccess": "Login successful",
+  "logoutSuccess": "Logout successful",
+  "loginFailed": "Login failed",
+  "logoutFailed": "Logout failed",
+  "welcomeMessage": "Welcome to the app!"
+}
