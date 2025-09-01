@@ -1,7 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc_architecture_template/src/common/common.dart';
-import 'package:flutter_bloc_architecture_template/src/pages/home/home_page.dart';
 import 'package:flutter_bloc_architecture_template/src/pages/pages.dart';
 import 'package:go_router/go_router.dart';
 
@@ -52,6 +51,7 @@ class AppBottomNavigator extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class BottomNavigationItem extends StatelessWidget {
   final IconData icon;
   RouterItem? routeTo;

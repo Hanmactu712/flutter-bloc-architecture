@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_architecture_template/src/common/common.dart';
 import 'package:flutter_bloc_architecture_template/src/pages/pages.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
@@ -22,6 +23,8 @@ class RouteConfig extends Equatable {
 }
 
 class AppRouter {
+  final List<RouteConfig> routeStack = [];
+
   CustomTransitionPage<dynamic> _customTransitionPage({required Widget child}) {
     return CustomTransitionPage(
       key: UniqueKey(),
@@ -67,10 +70,12 @@ class AppRouter {
   late GoRouter _router;
 
   AppRouter() {
+    routeStack.add(RouteConfig(routeItem: HomePage.routeItem));
     _router = GoRouter(
       debugLogDiagnostics: true,
       navigatorKey: _navigatorKey,
       initialLocation: HomePage.routeItem.path,
+      observers: [RouteObserver()],
       routes: <RouteBase>[
         _customTransitionRoute(
           path: LoginPage.routeItem.path,
@@ -100,6 +105,11 @@ class AppRouter {
       errorBuilder: (context, state) => const ErrorPage(message: "Page not found"),
     );
   }
+
+  //build method to get current AppRouter from context.of
+  static AppRouter of(BuildContext context) {
+    return GetIt.I<AppRouter>();
+  }
 }
 
 extension RoutingExtension on BuildContext {
@@ -111,29 +121,29 @@ extension RoutingExtension on BuildContext {
     bool clearHistory = false,
   }) {
     var router = GoRouter.of(this);
+    var appRouter = AppRouter.of(this);
     if (clearHistory) {
-      while (router.canPop()) {
-        router.pop();
-      }
-      // router.pushNamed(routeItem.name, queryParameters: queryParameters ?? {}, pathParameters: pathParameters ?? {}, extra: extra ?? {});
-      router.go(routeItem.path, extra: extra);
+      appRouter.routeStack.clear();
+      appRouter.routeStack.add(
+        RouteConfig(routeItem: routeItem, queryParameters: queryParameters ?? {}, pathParameters: pathParameters ?? {}, extra: extra ?? {}),
+      );
+      router.goNamed(routeItem.name, extra: extra, queryParameters: queryParameters ?? {}, pathParameters: pathParameters ?? {});
     } else {
-      // Prevent routing if already on the target page with same parameters
-      final currentState = GoRouter.of(this).routerDelegate.currentConfiguration;
-      final isSameRoute = currentState.fullPath == routeItem.path;
-
-      if (!isSameRoute) {
-        // router.pushNamed(routeItem.name, extra: extra, queryParameters: queryParameters ?? {}, pathParameters: pathParameters ?? {});
-        router.go(routeItem.path, extra: extra);
-      }
+      router.goNamed(routeItem.name, extra: extra, queryParameters: queryParameters ?? {}, pathParameters: pathParameters ?? {});
+      appRouter.routeStack.add(
+        RouteConfig(routeItem: routeItem, queryParameters: queryParameters ?? {}, pathParameters: pathParameters ?? {}, extra: extra ?? {}),
+      );
     }
   }
 
   void routeBack() {
     var router = GoRouter.of(this);
+    var appRouter = AppRouter.of(this);
 
-    if (router.canPop()) {
-      router.pop();
+    if (canBack()) {
+      appRouter.routeStack.removeLast();
+      var lastRoute = appRouter.routeStack.last;
+      router.goNamed(lastRoute.routeItem.name, extra: lastRoute.extra, queryParameters: lastRoute.queryParameters, pathParameters: lastRoute.pathParameters);
     }
   }
 
@@ -142,7 +152,6 @@ extension RoutingExtension on BuildContext {
   }
 
   bool canBack() {
-    var router = GoRouter.of(this);
-    return router.canPop();
+    return AppRouter.of(this).routeStack.length > 1;
   }
 }

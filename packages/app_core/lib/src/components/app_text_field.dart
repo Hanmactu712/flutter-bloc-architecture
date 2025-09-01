@@ -7,6 +7,7 @@ class AppTextField extends StatelessWidget {
   final IconData? prefixIcon;
   final bool? alignLabelWithHint;
   final Function(String)? onChanged;
+  final Function? onEditingComplete;
   final bool obscureText;
   final bool disabled;
   final TextEditingController? controller;
@@ -18,6 +19,7 @@ class AppTextField extends StatelessWidget {
     required this.label,
     this.value,
     this.onChanged,
+    this.onEditingComplete,
     this.prefixIcon,
     this.alignLabelWithHint,
     this.obscureText = false,
@@ -57,6 +59,10 @@ class AppTextField extends StatelessWidget {
       ),
       onChanged: (value) {
         onChanged?.call(value);
+      },
+      onEditingComplete: () {
+        onEditingComplete?.call();
+        FocusScope.of(context).unfocus();
       },
     );
   }

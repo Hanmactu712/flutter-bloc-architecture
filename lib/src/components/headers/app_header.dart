@@ -1,7 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc_architecture_template/src/common/common.dart';
-import 'package:flutter_bloc_architecture_template/src/localization/app_localizations.dart';
 
 import 'user_info.dart';
 
@@ -13,7 +12,6 @@ class CompactHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var canBack = context.canBack();
-    final locale = AppLocalizations.of(context)!;
     return Container(
       key: const Key("top-navigation-compact"),
       padding: const EdgeInsets.symmetric(horizontal: 4.0),

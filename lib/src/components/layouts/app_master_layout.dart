@@ -55,7 +55,7 @@ class AppMasterLayout extends StatelessWidget {
                 builder: (context, state) {
                   var isDark = state is SettingsLoaded && state.themeSettings.themeMode == ThemeMode.dark;
                   return IconButton(
-                    icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                    icon: Icon(isDark ? Icons.dark_mode : Icons.light_mode, color: Theme.of(context).colorScheme.onSurfaceVariant),
                     onPressed: () {
                       context.read<SettingsCubit>().toggleTheme();
                     },

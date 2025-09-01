@@ -1,6 +1,5 @@
 import 'package:app_core/app_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc_architecture_template/src/localization/app_localizations.dart';
 import 'package:flutter_bloc_architecture_template/src/pages/pages.dart';
 
 import 'app_menu_item.dart';
@@ -31,7 +30,6 @@ class AppMenuRail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var locale = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: Column(

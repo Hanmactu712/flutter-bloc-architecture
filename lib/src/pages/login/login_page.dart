@@ -33,36 +33,41 @@ class LoginPage extends StatelessWidget {
           body: AdaptiveLayoutConfig(
             compactScreen: BlocBuilder<LoginCubit, LoginState>(
               builder: (context, state) {
-                return Column(
-                  spacing: 12,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Column(
-                        children: [
-                          Expanded(child: FittedBox(fit: BoxFit.scaleDown, child: WelcomeLogo(locale: locale))),
-                          Expanded(child: LoginForm(state: state)),
-                        ],
+                return Padding(
+                  padding: const EdgeInsets.all(28.0),
+                  child: Column(
+                    spacing: 28,
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          children: [
+                            Expanded(child: FittedBox(fit: BoxFit.scaleDown, child: WelcomeLogo(locale: locale))),
+                            Expanded(child: LoginForm(state: state)),
+                          ],
+                        ),
+                        // child: SizedBox(),
                       ),
-                      // child: SizedBox(),
-                    ),
-                    //footer
-                    const AppBottomNavigator(),
-                  ],
+                    ],
+                  ),
                 );
               },
             ),
             mediumScreen: BlocBuilder<LoginCubit, LoginState>(
               builder: (context, state) {
-                return Column(
-                  spacing: 12,
-                  children: [
-                    Expanded(
-                      child: AppListView(columnConfig: const LayoutConfig(compactScreen: 2), children: [WelcomeLogo(locale: locale), LoginForm(state: state)]),
-                    ),
-                    //footer
-                    const AppBottomNavigator(),
-                  ],
+                return Padding(
+                  padding: const EdgeInsets.all(28.0),
+                  child: Column(
+                    spacing: 28,
+                    children: [
+                      Expanded(
+                        child: AppListView(
+                          columnConfig: const LayoutConfig(compactScreen: 2),
+                          children: [WelcomeLogo(locale: locale), LoginForm(state: state)],
+                        ),
+                      ),
+                    ],
+                  ),
                 );
               },
             ),
@@ -80,19 +85,22 @@ class LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        spacing: 12,
+      child: AppListView(
+        gapConfig: LayoutConfig(compactScreen: 16.0, mediumScreen: 32.0),
         children: [
-          SizedBox(height: 32),
           AppTextField(
             label: "Email",
             onChanged: (value) => context.read<LoginCubit>().changeUser(value),
+            onEditingComplete: () {
+              context.read<LoginCubit>().changeUser(state.email.value);
+            },
             errorText:
-                state.email.error == EmailValidationError.empty
-                    ? "Please input email."
-                    : state.email.error == EmailValidationError.invalid
-                    ? "Invalid email."
+                !state.email.isPure
+                    ? (state.email.error == EmailValidationError.empty
+                        ? "Please input email."
+                        : state.email.error == EmailValidationError.invalid
+                        ? "Invalid email."
+                        : null)
                     : null,
           ),
           AppTextField(
@@ -100,12 +108,20 @@ class LoginForm extends StatelessWidget {
             value: state.password.value,
             obscureText: true,
             onChanged: (value) => context.read<LoginCubit>().changePassword(value),
-            errorText: state.password.error == PasswordValidationError.empty ? "Please input password." : null,
+            onEditingComplete: () {
+              context.read<LoginCubit>().changePassword(state.password.value);
+            },
+            errorText:
+                !state.password.isPure
+                    ? state.password.error == PasswordValidationError.empty
+                        ? "Please input password."
+                        : null
+                    : null,
           ),
           AppButton(
             width: double.infinity,
             text: "Login",
-            height: 40,
+            height: 50,
             type: "primary",
             onPressed:
                 state.isValid

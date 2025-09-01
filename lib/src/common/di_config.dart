@@ -2,10 +2,9 @@ import 'dart:io';
 
 import 'package:app_auth/app_auth.dart';
 import 'package:app_core/app_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart';
+import 'package:sample_package_structure/sample_package_structure.dart';
 
 import 'app_router.dart';
 
@@ -29,11 +28,13 @@ class DIConfig {
     logger.debug('Configuring DI - start');
 
     try {
-      final GoRouter router = AppRouter().router;
+      final AppRouter router = AppRouter();
       final IAuthService authService = AuthService();
+      final ISampleService sampleService = SampleService();
 
-      GetIt.I.registerSingleton<GoRouter>(router);
+      GetIt.I.registerSingleton<AppRouter>(router);
       GetIt.I.registerSingleton<IAuthService>(authService);
+      GetIt.I.registerSingleton<ISampleService>(sampleService);
     } on Exception catch (e) {
       logger.info('Error configuring DI: $e');
       rethrow;

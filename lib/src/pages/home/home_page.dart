@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_architecture_template/src/common/common.dart';
 import 'package:flutter_bloc_architecture_template/src/components/layouts/layouts.dart';
 import 'package:flutter_bloc_architecture_template/src/pages/home/cubit/home_cubit.dart';
+import 'package:go_router/go_router.dart';
 
 import '../error/error.dart';
 
@@ -40,7 +41,16 @@ class HomePage extends StatelessWidget {
                     );
                   }
                   if (state is HomeLoadedSuccess) {
-                    return Column(children: []);
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          AppText(text: "Welcome to the Home Page", style: Theme.of(context).textTheme.headlineMedium),
+                          Expanded(child: Padding(padding: const EdgeInsets.all(28.0), child: AppLogo())),
+                          AppText(text: "Can pop:${context.canPop()}", style: Theme.of(context).textTheme.bodyMedium),
+                        ],
+                      ),
+                    );
                   }
                   return const Center(child: CircularProgressIndicator.adaptive());
                 },
