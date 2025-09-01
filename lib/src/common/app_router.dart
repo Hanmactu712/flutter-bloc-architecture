@@ -140,7 +140,7 @@ extension RoutingExtension on BuildContext {
     var router = GoRouter.of(this);
     var appRouter = AppRouter.of(this);
 
-    if (canBack()) {
+    if (appRouter.routeStack.length > 1) {
       appRouter.routeStack.removeLast();
       var lastRoute = appRouter.routeStack.last;
       router.goNamed(lastRoute.routeItem.name, extra: lastRoute.extra, queryParameters: lastRoute.queryParameters, pathParameters: lastRoute.pathParameters);
@@ -148,7 +148,8 @@ extension RoutingExtension on BuildContext {
   }
 
   String currentRoutePath() {
-    return GoRouter.of(this).routeInformationProvider.value.uri.path;
+    var appRouter = AppRouter.of(this);
+    return appRouter.routeStack.isNotEmpty ? appRouter.routeStack.last.routeItem.path : '/';
   }
 
   bool canBack() {
