@@ -90,6 +90,12 @@ class AppRouter {
           },
         ),
         _customTransitionRoute(path: HomePage.routeItem.path, name: HomePage.routeItem.name, isSecure: true, builder: (context, state) => const HomePage()),
+        _customTransitionRoute(
+          path: SamplePage.routeItem.path,
+          name: SamplePage.routeItem.name,
+          isSecure: true,
+          builder: (context, state) => const SamplePage(),
+        ),
       ],
       errorBuilder: (context, state) => const ErrorPage(message: "Page not found"),
     );
@@ -109,14 +115,23 @@ extension RoutingExtension on BuildContext {
       while (router.canPop()) {
         router.pop();
       }
-      router.pushReplacementNamed(routeItem.name, queryParameters: queryParameters ?? {}, pathParameters: pathParameters ?? {}, extra: extra ?? {});
+      // router.pushNamed(routeItem.name, queryParameters: queryParameters ?? {}, pathParameters: pathParameters ?? {}, extra: extra ?? {});
+      router.go(routeItem.path, extra: extra);
     } else {
-      router.pushNamed(routeItem.name, extra: extra, queryParameters: queryParameters ?? {}, pathParameters: pathParameters ?? {});
+      // Prevent routing if already on the target page with same parameters
+      final currentState = GoRouter.of(this).routerDelegate.currentConfiguration;
+      final isSameRoute = currentState.fullPath == routeItem.path;
+
+      if (!isSameRoute) {
+        // router.pushNamed(routeItem.name, extra: extra, queryParameters: queryParameters ?? {}, pathParameters: pathParameters ?? {});
+        router.go(routeItem.path, extra: extra);
+      }
     }
   }
 
   void routeBack() {
     var router = GoRouter.of(this);
+
     if (router.canPop()) {
       router.pop();
     }

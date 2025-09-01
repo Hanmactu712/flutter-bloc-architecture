@@ -11,20 +11,9 @@ final class HomeInitial extends HomeState {}
 
 final class HomeLoading extends HomeState {}
 
-final class HomeReceiveSharedMarker extends HomeState {
-  final String id;
-
-  const HomeReceiveSharedMarker(this.id);
-
-  @override
-  List<Object> get props => [id];
-}
-
 final class HomeLoadedSuccess extends HomeState {
   final String? collectionId;
-  const HomeLoadedSuccess({
-    this.collectionId,
-  });
+  const HomeLoadedSuccess({this.collectionId});
 
   @override
   List<Object?> get props => [collectionId];

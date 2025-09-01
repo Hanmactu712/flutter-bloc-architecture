@@ -1,5 +1,9 @@
 import 'package:app_core/app_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_architecture_template/src/pages/pages.dart';
+
+import 'app_menu_rail.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -13,13 +17,41 @@ class AppDrawer extends StatelessWidget {
       width: 280,
       child: Column(
         children: [
-          Container(
-            height: 100,
-            margin: const EdgeInsets.all(8.0),
-            color: Theme.of(context).colorScheme.surface,
-            child: Center(child: Column(children: [AppText(text: "MY MARKER", style: context.headlineMedium!.copyWith(fontWeight: FontWeight.bold))])),
+          Padding(padding: const EdgeInsets.all(24.0), child: AppLogo()),
+          const Expanded(child: AppMenuRail(isExpanded: true, widthConfig: LayoutConfig<double>(compactScreen: 260))),
+          //setting for dark/light theme
+          Divider(),
+          Row(
+            spacing: 8.0,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              BlocBuilder<SettingsCubit, SettingsState>(
+                builder: (context, state) {
+                  var isDark = state is SettingsLoaded && state.themeSettings.themeMode == ThemeMode.dark;
+                  return IconButton(
+                    icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                    onPressed: () {
+                      context.read<SettingsCubit>().toggleTheme();
+                    },
+                  );
+                },
+              ),
+              //label
+              BlocBuilder<SettingsCubit, SettingsState>(
+                builder: (context, state) {
+                  return Text(
+                    state is SettingsLoaded
+                        ? (state.themeSettings.themeMode == ThemeMode.dark
+                            ? "Dark"
+                            : state.themeSettings.themeMode == ThemeMode.light
+                            ? "Light"
+                            : "System")
+                        : "Loading...",
+                  );
+                },
+              ),
+            ],
           ),
-          const Expanded(child: SizedBox()),
         ],
       ),
     );

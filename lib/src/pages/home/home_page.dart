@@ -17,7 +17,6 @@ class HomePage extends StatelessWidget {
     return BlocProvider(
       create: (context) => HomeCubit()..loadData(),
       child: BlocListener<HomeCubit, HomeState>(
-        listenWhen: (previous, current) => current is HomeReceiveSharedMarker,
         listener: (context, state) {},
         child: AppMasterLayout(
           onPopped: (didPop, a) {

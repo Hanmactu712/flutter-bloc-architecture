@@ -1,4 +1,4 @@
-import 'package:app_core/src/common/constant.dart';
+import 'package:app_core/app_core.dart';
 import 'package:flutter/material.dart';
 
 class DraggableMenu extends StatelessWidget {

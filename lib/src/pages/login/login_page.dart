@@ -47,7 +47,7 @@ class LoginPage extends StatelessWidget {
                       // child: SizedBox(),
                     ),
                     //footer
-                    const AppFooter(),
+                    const AppBottomNavigator(),
                   ],
                 );
               },
@@ -61,7 +61,7 @@ class LoginPage extends StatelessWidget {
                       child: AppListView(columnConfig: const LayoutConfig(compactScreen: 2), children: [WelcomeLogo(locale: locale), LoginForm(state: state)]),
                     ),
                     //footer
-                    const AppFooter(),
+                    const AppBottomNavigator(),
                   ],
                 );
               },

@@ -57,10 +57,9 @@ class CompactHeader extends StatelessWidget {
                   },
                 ),
 
-              //logo
               Container(
                 padding: const EdgeInsets.all(8),
-                child: Center(child: AppText(text: "Homepage", style: context.titleMedium!.copyWith(fontWeight: FontWeight.bold))),
+                child: Center(child: AppText(text: "Page title", style: context.titleMedium!.copyWith(fontWeight: FontWeight.bold))),
               ),
               const SizedBox(width: 8),
               const UserInfo(avatarSize: 18),

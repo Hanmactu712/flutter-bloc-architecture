@@ -1,8 +1,12 @@
 import 'package:app_core/app_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_architecture_template/src/components/headers/headers.dart';
+import 'package:flutter_bloc_architecture_template/src/pages/settings/cubit/settings_cubit.dart';
 
+import 'app_drawer.dart';
 import 'app_footer.dart';
+import 'app_menu_rail.dart';
 
 class AppMasterLayout extends StatelessWidget {
   final AdaptiveLayoutConfig? bodyConfig;
@@ -21,7 +25,8 @@ class AppMasterLayout extends StatelessWidget {
       onPopInvokedWithResult: (didPop, result) => onPopped?.call(didPop, result),
       child: AdaptiveLayout(
         padding: 0.0,
-        bottomNavigation: const AdaptiveLayoutConfig(compactScreen: AppFooter()),
+        bottomNavigation: const AdaptiveLayoutConfig(compactScreen: AppBottomNavigator(), expandedScreen: AppFooter()),
+        drawer: const AdaptiveLayoutConfig(compactScreen: AppDrawer(), mediumScreen: AppDrawer()),
         topNavigation:
             showTopNavigation
                 ? AdaptiveLayoutConfig(
@@ -41,6 +46,24 @@ class AppMasterLayout extends StatelessWidget {
           outAnimation:
               (child, animation) => SlideTransition(position: Tween<Offset>(begin: Offset.zero, end: const Offset(-1, 0)).animate(animation), child: child),
           compactScreen: const SizedBox(),
+          expandedScreen: Column(
+            spacing: 8.0,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(child: const AppMenuRail()),
+              BlocBuilder<SettingsCubit, SettingsState>(
+                builder: (context, state) {
+                  var isDark = state is SettingsLoaded && state.themeSettings.themeMode == ThemeMode.dark;
+                  return IconButton(
+                    icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                    onPressed: () {
+                      context.read<SettingsCubit>().toggleTheme();
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
         ),
         body: body != null ? AdaptiveLayoutConfig(compactScreen: body!) : bodyConfig!,
       ),

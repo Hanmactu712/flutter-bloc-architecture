@@ -14,7 +14,7 @@ class LargeHeader extends StatelessWidget {
     var canBack = context.canBack();
     final locale = AppLocalizations.of(context)!;
     return Container(
-      key: const Key("top-navigation-compact"),
+      key: const Key("top-navigation-large"),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,

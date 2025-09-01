@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Constant {
-  static Color primaryColor = const Color.fromARGB(210, 1, 60, 21);
+  static Color primaryColor = const Color(0xFF326B70);
 
   //local storage key
   static String LS_Settings = 'app_settings';
