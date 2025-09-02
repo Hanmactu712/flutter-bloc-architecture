@@ -4,10 +4,7 @@ A Flutter project template using the BLoC architecture.
 
 ## Sample images
 
-list the images from the `assets/images` directory
-[![](assets/images/sample1.png)](assets/images/sample1.png)
-[![](assets/images/sample2.png)](assets/images/sample2.png)
-[![](assets/images/sample3.png)](assets/images/sample3.png)
+<img src="assets/images/light_small.png.png">
 
 ## Getting Started
 
