@@ -4,13 +4,17 @@ A Flutter project template using the BLoC architecture.
 
 ## Sample images
 
-![light_small](assets/images/light_small.png)
-![dark_small](assets/images/dark_small.png)
-![light_large](assets/images/light_large.png)
-![light_expanded](assets/images/light_expanded.png)
-![light_expanded_1](assets/images/light_expanded_1.png)
-![light_medium](assets/images/light_medium.png)
-![dark_list](assets/images/dark_list.png)
+<p>
+  <img src="assets/images/light_small.png" alt="light_small" width="200"/>
+  <img src="assets/images/dark_smal.png" alt="dark_small" width="200"/>
+  <img src="assets/images/dark_list.png" alt="dark_list" width="200"/>
+</p>
+<p>
+  <img src="assets/images/light_expanded.png" alt="light_expanded" width="200"/>
+  <img src="assets/images/light_expanded_1.png" alt="light_expanded_1" width="200"/>
+  <img src="assets/images/ligt_large.png" alt="dark_list" width="200"/>
+  <img src="assets/images/light_medium.png" alt="light_medium" width="200"/>
+</p>
 
 ## Getting Started
 
