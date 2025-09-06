@@ -55,8 +55,21 @@ To get started with this template, follow these steps:
   ```
 
 - Run/build for other environment mode:
+
   ```
     flutter (run | build) -t lib/main_<environment>.dart
+  ```
+
+- By default, if no flavor is specified, it will use the `dev` flavor. To run/build for a specific flavor, use the `--flavor` option:
+
+  ```
+    flutter (run | build) --flavor <flavor_name> -t lib/main_<environment>.dart
+  ```
+
+  For example, to run the app in production mode with the `prod` flavor:
+
+  ```
+    flutter run --flavor production -t .\lib\main_prod.dart
   ```
 
 ## Features
@@ -322,6 +335,41 @@ All the services are located in the `app_core` package under the `services` fold
 - `SecureStorageService`: A service that provides secure storage for sensitive data.
 
 ## Configuration
+
+### Change the app name & flavor name
+
+To change the app name and flavor name, you need to update the following files:
+
+- for Android:
+  - `android\app\build.gradle.kts`, update the productFlavors section
+  ```
+   productFlavors {
+        create("staging") {
+            dimension = "default"
+            resValue(
+                type = "string",
+                name = "app_name",
+                value = "BLoCTemplate STG")
+            applicationIdSuffix = ".staging"
+        }
+        create("dev") {
+            dimension = "default"
+            resValue(
+                type = "string",
+                name = "app_name",
+                value = "BLoCTemplate DEV")
+            applicationIdSuffix = ".dev"
+        }
+        create("production") {
+            dimension = "default"
+            resValue(
+                type = "string",
+                name = "app_name",
+                value = "BLoCTemplate")
+            // No suffix for production
+        }
+    }
+  ```
 
 ### Change the package name
 

@@ -61,6 +61,7 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   flutter_launcher_icons: ^0.14.4
 flutter:
+  default-flavor: dev
   uses-material-design: true
   generate: true
 
