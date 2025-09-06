@@ -49,7 +49,7 @@ class ThemeProvider extends InheritedWidget {
   }
 
   Color blend(Color targetColor) {
-    return Color(Blend.harmonize(targetColor.value, settings.sourceColor.value));
+    return Color(Blend.harmonize(targetColor.toARGB32(), settings.sourceColor.toARGB32()));
   }
 
   Color source(Color? target) {
@@ -203,7 +203,7 @@ class ThemeSettings {
   //to json
   Map<String, dynamic> toJson() {
     return {
-      'sourceColor': sourceColor.value,
+      'sourceColor': sourceColor.toARGB32(),
       'themeMode': themeMode.index,
     };
   }

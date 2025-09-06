@@ -42,14 +42,14 @@ class SettingsCubit extends Cubit<SettingsState> {
 
       var store = await instanceFuture;
 
-      store.setString(Constant.LS_Settings, jsonEncode(currentState.toJson()));
+      store.setString(Constant.lsSettings, jsonEncode(currentState.toJson()));
     }
   }
 
   _loadSettingsFromLocal() async {
     try {
       var store = await instanceFuture;
-      var settings = store.getString(Constant.LS_Settings);
+      var settings = store.getString(Constant.lsSettings);
       if (settings != null) {
         var settingsJson = jsonDecode(settings);
         return SettingsLoaded.fromJson(settingsJson);

@@ -5,9 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class NotificationWrapper extends StatelessWidget {
   final Widget Function(BuildContext) builder;
   const NotificationWrapper({
-    Key? key,
+    super.key,
     required this.builder,
-  }) : super(key: key);
+  });
 
   _getColor(NotificationType type) {
     switch (type) {

@@ -10,14 +10,14 @@ class AppPage extends StatelessWidget {
   final Drawer? drawer;
   final double? minHeight;
   const AppPage({
-    Key? key,
+    super.key,
     required this.child,
     this.appBar,
     this.bottomSheet,
     this.minHeight,
     this.drawer,
     this.floatingActionButton,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

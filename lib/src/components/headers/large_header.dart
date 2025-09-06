@@ -18,7 +18,7 @@ class LargeHeader extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
-        boxShadow: [BoxShadow(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1), offset: const Offset(0, 1), blurRadius: 4)],
+        boxShadow: [BoxShadow(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.1), offset: const Offset(0, 1), blurRadius: 4)],
       ),
       height: 60,
       child: Row(

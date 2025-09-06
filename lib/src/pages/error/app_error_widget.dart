@@ -1,6 +1,5 @@
 import 'package:app_core/app_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc_architecture_template/src/common/common.dart';
 import 'package:flutter_bloc_architecture_template/src/localization/app_localizations.dart';
 
 class AppErrorWidget extends StatelessWidget {

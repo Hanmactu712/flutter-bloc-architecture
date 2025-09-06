@@ -12,7 +12,7 @@ class DraggableMenu extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(8),
-        boxShadow: [BoxShadow(color: Theme.of(context).colorScheme.primary.withOpacity(0.5), blurRadius: 4, offset: const Offset(2, 2))],
+        boxShadow: [BoxShadow(color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.5), blurRadius: 4, offset: const Offset(2, 2))],
       ),
       child: IconButton.filled(
         style: ButtonStyle(

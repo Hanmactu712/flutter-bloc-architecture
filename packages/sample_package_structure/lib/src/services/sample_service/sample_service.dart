@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:sample_package_structure/sample_package_structure.dart';
 
 class SampleService implements ISampleService {

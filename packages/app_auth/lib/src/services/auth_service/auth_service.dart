@@ -23,7 +23,7 @@ class AuthService extends IAuthService {
   @override
   logout() async {
     var store = await instanceFuture;
-    store.remove(Constant.LS_Identity);
+    store.remove(Constant.lsIdentity);
     _currentUser = null;
     _controller.add(AuthIdentity(id: '', userName: '', email: ''));
   }
@@ -33,7 +33,7 @@ class AuthService extends IAuthService {
     try {
       var store = await instanceFuture;
 
-      var identityStr = store.getString(Constant.LS_Identity);
+      var identityStr = store.getString(Constant.lsIdentity);
       if (identityStr != null) {
         var identity = AuthIdentity.fromJson(jsonDecode(identityStr));
 
@@ -44,7 +44,7 @@ class AuthService extends IAuthService {
 
       var auth = AuthIdentity(id: 'userId', userName: "Dang Dinh Duc", email: "sample@example.com");
 
-      store.setString(Constant.LS_Identity, jsonEncode(auth.toJson()));
+      store.setString(Constant.lsIdentity, jsonEncode(auth.toJson()));
       _controller.add(auth);
       return auth;
     } on Exception catch (e) {

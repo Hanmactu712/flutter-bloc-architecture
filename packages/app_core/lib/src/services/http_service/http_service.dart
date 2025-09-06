@@ -30,8 +30,8 @@ class HttpService extends IHttpService {
       ),
     );
 
-    _dio.options.connectTimeout = const Duration(seconds: 120);
-    _dio.options.receiveTimeout = const Duration(seconds: 120);
+    _dio.options.connectTimeout = const Duration(seconds: 30);
+    _dio.options.receiveTimeout = const Duration(seconds: 30);
   }
 
   Future<String?> _getAuthToken() async {
@@ -40,56 +40,126 @@ class HttpService extends IHttpService {
 
   @override
   Future<HttpResponse<TResult>> get<TResult>(
-    String path, {
+    String path,
+    TResult Function(Map<String, dynamic> data) fromJson, {
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? data,
     Map<String, dynamic>? headers,
   }) async {
-    final response = await _dio.get(path, queryParameters: queryParameters, data: data, options: Options(headers: headers));
-    return HttpResponse(statusCode: response.statusCode ?? 500, statusMessage: response.statusMessage, data: response.data as TResult?);
+    try {
+      final response = await _dio.get(path, queryParameters: queryParameters, data: data, options: Options(headers: headers));
+      return HttpResponse(
+        statusCode: response.statusCode ?? 500,
+        statusMessage: response.statusMessage,
+        data: response.data != null ? fromJson(response.data as Map<String, dynamic>) : null,
+      );
+    } on DioException catch (e) {
+      return HttpResponse(
+        statusCode: e.response?.statusCode ?? 500,
+        statusMessage: e.response?.statusMessage,
+        data: null,
+        originalResponse: e.response,
+      );
+    }
   }
 
   @override
   Future<HttpResponse<TResult>> post<TResult>(
-    String path, {
+    String path,
+    TResult Function(Map<String, dynamic> data) fromJson, {
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? data,
     Map<String, dynamic>? headers,
   }) async {
-    final response = await _dio.post(path, queryParameters: queryParameters, data: data, options: Options(headers: headers));
-    return HttpResponse(statusCode: response.statusCode ?? 500, statusMessage: response.statusMessage, data: response.data as TResult?);
+    try {
+      final response = await _dio.post(path, queryParameters: queryParameters, data: data, options: Options(headers: headers));
+      return HttpResponse(
+        statusCode: response.statusCode ?? 500,
+        statusMessage: response.statusMessage,
+        data: response.data != null ? fromJson(response.data as Map<String, dynamic>) : null,
+      );
+    } on DioException catch (e) {
+      return HttpResponse(
+        statusCode: e.response?.statusCode ?? 500,
+        statusMessage: e.response?.statusMessage,
+        data: null,
+        originalResponse: e.response,
+      );
+    }
   }
 
   @override
   Future<HttpResponse<TResult>> put<TResult>(
-    String path, {
+    String path,
+    TResult Function(Map<String, dynamic> data) fromJson, {
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? data,
     Map<String, dynamic>? headers,
   }) async {
-    final response = await _dio.put(path, queryParameters: queryParameters, data: data, options: Options(headers: headers));
-    return HttpResponse(statusCode: response.statusCode ?? 500, statusMessage: response.statusMessage, data: response.data as TResult?);
+    try {
+      final response = await _dio.put(path, queryParameters: queryParameters, data: data, options: Options(headers: headers));
+      return HttpResponse(
+        statusCode: response.statusCode ?? 500,
+        statusMessage: response.statusMessage,
+        data: response.data != null ? fromJson(response.data as Map<String, dynamic>) : null,
+      );
+    } on DioException catch (e) {
+      return HttpResponse(
+        statusCode: e.response?.statusCode ?? 500,
+        statusMessage: e.response?.statusMessage,
+        data: null,
+        originalResponse: e.response,
+      );
+    }
   }
 
   @override
   Future<HttpResponse<TResult>> patch<TResult>(
-    String path, {
+    String path,
+    TResult Function(Map<String, dynamic> data) fromJson, {
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? data,
     Map<String, dynamic>? headers,
   }) async {
-    final response = await _dio.patch(path, queryParameters: queryParameters, data: data, options: Options(headers: headers));
-    return HttpResponse(statusCode: response.statusCode ?? 500, statusMessage: response.statusMessage, data: response.data as TResult?);
+    try {
+      final response = await _dio.patch(path, queryParameters: queryParameters, data: data, options: Options(headers: headers));
+      return HttpResponse(
+        statusCode: response.statusCode ?? 500,
+        statusMessage: response.statusMessage,
+        data: response.data != null ? fromJson(response.data as Map<String, dynamic>) : null,
+      );
+    } on DioException catch (e) {
+      return HttpResponse(
+        statusCode: e.response?.statusCode ?? 500,
+        statusMessage: e.response?.statusMessage,
+        data: null,
+        originalResponse: e.response,
+      );
+    }
   }
 
   @override
   Future<HttpResponse<TResult>> delete<TResult>(
-    String path, {
+    String path,
+    TResult Function(Map<String, dynamic> data) fromJson, {
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? data,
     Map<String, dynamic>? headers,
   }) async {
-    final response = await _dio.delete(path, queryParameters: queryParameters, data: data, options: Options(headers: headers));
-    return HttpResponse(statusCode: response.statusCode ?? 500, statusMessage: response.statusMessage, data: response.data as TResult?);
+    try {
+      final response = await _dio.delete(path, queryParameters: queryParameters, data: data, options: Options(headers: headers));
+      return HttpResponse(
+        statusCode: response.statusCode ?? 500,
+        statusMessage: response.statusMessage,
+        data: response.data != null ? fromJson(response.data as Map<String, dynamic>) : null,
+      );
+    } on DioException catch (e) {
+      return HttpResponse(
+        statusCode: e.response?.statusCode ?? 500,
+        statusMessage: e.response?.statusMessage,
+        data: null,
+        originalResponse: e.response,
+      );
+    }
   }
 }

@@ -11,7 +11,7 @@ class ResponsiveWidget extends StatefulWidget {
   final Widget Function(Widget, Animation<double>)? outAnimation;
   final Duration? duration;
   const ResponsiveWidget({
-    Key? key,
+    super.key,
     required this.compactScreen,
     this.mediumScreen,
     this.expandedScreen,
@@ -20,7 +20,7 @@ class ResponsiveWidget extends StatefulWidget {
     this.inAnimation,
     this.outAnimation,
     this.duration,
-  }) : super(key: key);
+  });
 
   @override
   State<ResponsiveWidget> createState() => _ResponsiveWidgetState();

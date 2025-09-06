@@ -19,7 +19,7 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      systemStatusBarContrastEnforced: true,
+      systemStatusBarContrastEnforced: false,
       systemNavigationBarColor: Colors.transparent,
       systemNavigationBarContrastEnforced: true,
     ),
@@ -41,7 +41,9 @@ void main() async {
 
   logger.debug('Starting app...');
 
-  await DIConfig.configure(env: Environment.development);
+  await DIConfig.configure(
+    env: Environment.production,
+  );
 
   FlutterNativeSplash.remove();
 

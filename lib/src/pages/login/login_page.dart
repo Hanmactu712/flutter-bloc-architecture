@@ -2,7 +2,6 @@ import 'package:app_auth/app_auth.dart';
 import 'package:app_core/app_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_architecture_template/src/components/layouts/layouts.dart';
 import 'package:flutter_bloc_architecture_template/src/localization/app_localizations.dart';
 import 'package:flutter_bloc_architecture_template/src/pages/login/cubit/login_page_cubit.dart';
 import 'package:formz/formz.dart';
@@ -94,14 +93,13 @@ class LoginForm extends StatelessWidget {
             onEditingComplete: () {
               context.read<LoginCubit>().changeUser(state.email.value);
             },
-            errorText:
-                !state.email.isPure
-                    ? (state.email.error == EmailValidationError.empty
-                        ? "Please input email."
-                        : state.email.error == EmailValidationError.invalid
+            errorText: !state.email.isPure
+                ? (state.email.error == EmailValidationError.empty
+                    ? "Please input email."
+                    : state.email.error == EmailValidationError.invalid
                         ? "Invalid email."
                         : null)
-                    : null,
+                : null,
           ),
           AppTextField(
             label: "Password",
@@ -111,24 +109,22 @@ class LoginForm extends StatelessWidget {
             onEditingComplete: () {
               context.read<LoginCubit>().changePassword(state.password.value);
             },
-            errorText:
-                !state.password.isPure
-                    ? state.password.error == PasswordValidationError.empty
-                        ? "Please input password."
-                        : null
-                    : null,
+            errorText: !state.password.isPure
+                ? state.password.error == PasswordValidationError.empty
+                    ? "Please input password."
+                    : null
+                : null,
           ),
           AppButton(
             width: double.infinity,
             text: "Login",
             height: 50,
             type: "primary",
-            onPressed:
-                state.isValid
-                    ? () {
-                      context.read<LoginCubit>().login();
-                    }
-                    : null,
+            onPressed: state.isValid
+                ? () {
+                    context.read<LoginCubit>().login();
+                  }
+                : null,
           ),
         ],
       ),

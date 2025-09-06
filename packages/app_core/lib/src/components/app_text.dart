@@ -12,7 +12,7 @@ class AppText extends StatelessWidget {
   final TextStyle? style;
 
   const AppText({
-    Key? key,
+    super.key,
     this.text,
     this.textAlign,
     this.maxLines = 1,
@@ -20,7 +20,7 @@ class AppText extends StatelessWidget {
     this.markdown = false,
     this.isSelectable = false,
     this.style,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class AppText extends StatelessWidget {
             data: text!.replaceAll("\\n", "\n"),
             selectable: true,
             styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
-              textScaleFactor: 1.0,
+              textScaler: TextScaler.linear(1.0),
               textAlign: WrapAlignment.start,
               p: textStyle,
               h3: textStyle!.copyWith(fontSize: 24.0, fontWeight: FontWeight.bold),

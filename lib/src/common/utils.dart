@@ -1,10 +1,5 @@
 import 'dart:convert';
-import 'package:app_core/app_core.dart';
 import 'package:crypto/crypto.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc_architecture_template/src/common/app_router.dart';
-import 'package:flutter_bloc_architecture_template/src/pages/home/home_page.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 class Utils {

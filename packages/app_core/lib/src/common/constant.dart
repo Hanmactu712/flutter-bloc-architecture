@@ -4,8 +4,8 @@ class Constant {
   static Color primaryColor = const Color(0xFF326B70);
 
   //local storage key
-  static String LS_Settings = 'app_settings';
-  static String LS_Identity = 'app_identity';
+  static String lsSettings = 'app_settings';
+  static String lsIdentity = 'app_identity';
 
   static Widget spacerSm = const SizedBox(height: 8, width: 8);
   static Widget spacerMd = const SizedBox(height: 16, width: 16);

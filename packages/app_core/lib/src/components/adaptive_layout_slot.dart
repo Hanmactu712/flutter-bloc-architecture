@@ -7,12 +7,12 @@ class AdaptiveLayoutSlot extends StatefulWidget {
   final Duration? duration;
 
   const AdaptiveLayoutSlot({
-    Key? key,
+    super.key,
     required this.child,
     this.inAnimation,
     this.outAnimation,
     this.duration,
-  }) : super(key: key);
+  });
 
   @override
   State<AdaptiveLayoutSlot> createState() => _AdaptiveLayoutSlotState();

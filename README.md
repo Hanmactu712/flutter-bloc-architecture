@@ -47,9 +47,17 @@ To get started with this template, follow these steps:
    ```
 
 5. Run the application:
-   ```
-   flutter run
-   ```
+
+- Run for development mode:
+
+  ```
+  flutter run
+  ```
+
+- Run/build for other environment mode:
+  ```
+    flutter (run | build) -t lib/main_<environment>.dart
+  ```
 
 ## Features
 
@@ -107,6 +115,211 @@ lib/
 │   │   └── ...
 └── main.dart                     //the entry point of the application
 ```
+
+## Main Components
+
+### Layouts & responsie
+
+All the common widgets are located in the `app_core` package under the `components` folder. The main widgets are:
+
+- `AdaptiveLayout`: A widget that adapts its layout based on the screen size.
+
+```
+  AdaptiveLayout(
+    padding: 0.0,
+    bottomNavigation: const AdaptiveLayoutConfig(compactScreen: AppBottomNavigator(), expandedScreen: AppFooter()),
+    drawer: const AdaptiveLayoutConfig(compactScreen: AppDrawer(), mediumScreen: AppDrawer()),
+    topNavigation:
+        showTopNavigation
+            ? AdaptiveLayoutConfig(
+              inAnimation:
+                  (child, animation) =>
+                      SlideTransition(position: Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero).animate(animation), child: child),
+              outAnimation:
+                  (child, animation) =>
+                      SlideTransition(position: Tween<Offset>(begin: Offset.zero, end: const Offset(0, -1)).animate(animation), child: child),
+              expandedScreen: LargeHeader(showMenuButton: false, onBack: onBack),
+              compactScreen: CompactHeader(onBack: onBack),
+            )
+            : null,
+    leftNavigation: AdaptiveLayoutConfig(
+      inAnimation:
+          (child, animation) => SlideTransition(position: Tween<Offset>(begin: const Offset(-1, 0), end: Offset.zero).animate(animation), child: child),
+      outAnimation:
+          (child, animation) => SlideTransition(position: Tween<Offset>(begin: Offset.zero, end: const Offset(-1, 0)).animate(animation), child: child),
+      compactScreen: const SizedBox(),
+      expandedScreen: Column(
+        spacing: 8.0,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(child: const AppMenuRail()),
+          BlocBuilder<SettingsCubit, SettingsState>(
+            builder: (context, state) {
+              var isDark = state is SettingsLoaded && state.themeSettings.themeMode == ThemeMode.dark;
+              return IconButton(
+                icon: Icon(isDark ? Icons.dark_mode : Icons.light_mode, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                onPressed: () {
+                  context.read<SettingsCubit>().toggleTheme();
+                },
+              );
+            },
+          ),
+        ],
+      ),
+    ),
+    body: body != null ? AdaptiveLayoutConfig(compactScreen: body!) : bodyConfig!,
+  )
+```
+
+- `LayoutConfig`: A class that defines the layout configuration for different screen sizes.
+
+```
+  AppListView(
+    gapConfig: LayoutConfig(compactScreen: 16.0, mediumScreen: 32.0),
+    children: [
+      AppTextField(
+        label: "Email",
+        onChanged: (value) => context.read<LoginCubit>().changeUser(value),
+        onEditingComplete: () {
+          context.read<LoginCubit>().changeUser(state.email.value);
+        },
+        errorText: !state.email.isPure
+            ? (state.email.error == EmailValidationError.empty
+                ? "Please input email."
+                : state.email.error == EmailValidationError.invalid
+                    ? "Invalid email."
+                    : null)
+            : null,
+      ),
+      AppTextField(
+        label: "Password",
+        value: state.password.value,
+        obscureText: true,
+        onChanged: (value) => context.read<LoginCubit>().changePassword(value),
+        onEditingComplete: () {
+          context.read<LoginCubit>().changePassword(state.password.value);
+        },
+        errorText: !state.password.isPure
+            ? state.password.error == PasswordValidationError.empty
+                ? "Please input password."
+                : null
+            : null,
+      ),
+      AppButton(
+        width: double.infinity,
+        text: "Login",
+        height: 50,
+        type: "primary",
+        onPressed: state.isValid
+            ? () {
+                context.read<LoginCubit>().login();
+              }
+            : null,
+      ),
+    ],
+  )
+
+```
+
+- `ResponsiveWidget`: A widget that displays different widgets based on the screen size.
+
+```
+  ResponsiveWidget(
+    compactScreen: AppListView(
+      children: [
+        ...state.data.map(
+          (item) => Column(
+            spacing: 6.0,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AppText(
+                text: item.name,
+                textAlign: TextAlign.start,
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.bold),
+              ),
+              AppText(
+                text: item.description,
+                maxLines: 3,
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).colorScheme.onSurface),
+              ),
+              Divider(),
+            ],
+          ),
+        ),
+        //load more button
+        state.loading
+            ? Center(child: const CircularProgressIndicator())
+            : state.hasMore
+            ? TextButton(
+              onPressed: () {
+                context.read<SampleBlocPageCubit>().loadData(loadMore: true);
+              },
+              child: const Text('Load More'),
+            )
+            : const SizedBox(),
+      ],
+    ),
+    expandedScreen: GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 2),
+      cacheExtent: 100,
+      itemCount: state.hasMore ? state.data.length + 1 : state.data.length,
+      itemBuilder: (context, index) {
+        if (state.data.isEmpty) {
+          return const SizedBox();
+        }
+        //if has more
+        if (state.hasMore && index == state.data.length) {
+          context.read<SampleBlocPageCubit>().loadData(loadMore: true);
+          return const Center(child: CircularProgressIndicator());
+        }
+        final item = state.data[index];
+        return Card(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+          child: SizedBox(
+            height: 200,
+            child: Column(
+              spacing: 6.0,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(12.0),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(8.0), topRight: Radius.circular(8.0)),
+                  ),
+                  child: AppText(
+                    text: item.name,
+                    textAlign: TextAlign.start,
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: AppText(
+                    text: item.description,
+                    maxLines: 3,
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).colorScheme.onSurface),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    ),
+  )
+
+```
+
+- `AppListView`: A widget that displays a list of items with different layouts based on the screen size.
+
+### Services
+
+All the services are located in the `app_core` package under the `services` folder. The main services are:
+
+- `HttpService`: A service that provides network connectivity status.
+- `SecureStorageService`: A service that provides secure storage for sensitive data.
 
 ## Configuration
 

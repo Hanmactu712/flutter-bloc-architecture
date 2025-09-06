@@ -8,12 +8,12 @@ class AppListView extends StatelessWidget {
   final LayoutConfig<int> columnConfig;
   final LayoutConfig<double> gapConfig;
   const AppListView({
-    Key? key,
+    super.key,
     required this.children,
     this.scrollDirection = Axis.vertical,
     this.columnConfig = const LayoutConfig<int>(compactScreen: 1, expandedScreen: 2, largeScreen: 2, extraLargeScreen: 3),
     this.gapConfig = const LayoutConfig<double>(compactScreen: 8, expandedScreen: 12, largeScreen: 16),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
