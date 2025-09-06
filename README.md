@@ -186,6 +186,8 @@ All the common widgets are located in the `app_core` package under the `componen
 
 - `LayoutConfig`: A class that defines the layout configuration for different screen sizes.
 
+- `AppListView`: A widget that displays a list of items with different layouts based on the screen size.
+
 ```
   AppListView(
     gapConfig: LayoutConfig(compactScreen: 16.0, mediumScreen: 32.0),
@@ -324,8 +326,6 @@ All the common widgets are located in the `app_core` package under the `componen
   )
 
 ```
-
-- `AppListView`: A widget that displays a list of items with different layouts based on the screen size.
 
 ### Services
 
