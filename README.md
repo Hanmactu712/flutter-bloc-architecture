@@ -137,7 +137,7 @@ All the common widgets are located in the `app_core` package under the `componen
 
 - `AdaptiveLayout`: A widget that adapts its layout based on the screen size.
 
-```
+```dart
   AdaptiveLayout(
     padding: 0.0,
     bottomNavigation: const AdaptiveLayoutConfig(compactScreen: AppBottomNavigator(), expandedScreen: AppFooter()),
@@ -188,7 +188,7 @@ All the common widgets are located in the `app_core` package under the `componen
 
 - `AppListView`: A widget that displays a list of items with different layouts based on the screen size.
 
-```
+```dart
   AppListView(
     gapConfig: LayoutConfig(compactScreen: 16.0, mediumScreen: 32.0),
     children: [
@@ -238,7 +238,7 @@ All the common widgets are located in the `app_core` package under the `componen
 
 - `ResponsiveWidget`: A widget that displays different widgets based on the screen size.
 
-```
+```dart
   ResponsiveWidget(
     compactScreen: AppListView(
       children: [
@@ -342,7 +342,7 @@ To change the app name and flavor name, you need to update the following files:
 
 - for Android:
   - `android\app\build.gradle.kts`, update the productFlavors section
-  ```
+  ```dart
    productFlavors {
         create("staging") {
             dimension = "default"
@@ -370,6 +370,21 @@ To change the app name and flavor name, you need to update the following files:
         }
     }
   ```
+
+### Change the localization settings & update the localization files
+
+To change the localization settings, you need to update the following files, maybe also need to update the localization files in the corresponding packages:
+
+- `lib/l10n/app_en.arb`, update the localization strings
+- `lib/l10n/app_es.arb`, update the localization strings
+
+For global settings, change the file `I10n/l10n.dart` in the main project or in each package.
+
+Then, run the following command to generate the localization files:
+
+```
+flutter gen-l10n
+```
 
 ### Change the package name
 
